@@ -1,0 +1,464 @@
+<!DOCTYPE HTML>
+<html lang="ja" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>AWS SAM ハンズオン - AWS SAM ハンズオン</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="workshop materials">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="favicon.svg">
+                        <link rel="shortcut icon" href="favicon.png">
+                <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+                <link rel="stylesheet" href="css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="sam_intro.html" class="active">AWS SAM ハンズオン</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">AWS SAM ハンズオン</h1>
+
+                    <div class="right-buttons">
+                                                <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="aws-sam入門ハンズオン"><a class="header" href="#aws-sam入門ハンズオン">AWS SAM入門ハンズオン</a></h1>
+<p>AWS SAM (Serverless Application Model) は IaaS (Infrastructure as Code) のフレームワークで、AWS CloudFormation から拡張されたものです。</p>
+<p>CloudFormation をよく知らなくても問題なく利用できます。</p>
+<p>オープンソースのため、以下のリポジトリで公開されています。</p>
+<p><a href="https://github.com/aws/serverless-application-model">GitHub - aws/serverless-application-model: AWS Serverless Application Model (SAM) is an open-source framework for building serverless applications</a></p>
+<h2 id="インストール"><a class="header" href="#インストール">インストール</a></h2>
+<p>AWS SAM CLI を使用します。以下を参照してインストールします。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html">AWS SAM CLI のインストール</a></p>
+<p>また、今回は Docker も使用します。インストールされていない場合は以下よりインストールしておいてください。</p>
+<p><a href="https://docs.docker.com/get-docker/">Get Docker</a></p>
+<p>以降 SAM CLI を利用して進めていきます。</p>
+<p>適宜こちらのリファレンスを参照することをおすすめします。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html">AWS SAMCLI コマンドリファレンス</a></p>
+<h2 id="コンテナイメージのサポート"><a class="header" href="#コンテナイメージのサポート">コンテナイメージのサポート</a></h2>
+<p>2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。今回はこちらの機能も使っていきます。</p>
+<p><a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">AWS Lambda の新機能 - コンテナイメージのサポート | Amazon Web Services</a></p>
+<p>以下の言語のイメージが公開されています。</p>
+<ul>
+<li>Python</li>
+<li>Node.js</li>
+<li>Go</li>
+<li>Ruby</li>
+<li>Java</li>
+<li>.NET</li>
+</ul>
+<p>また、<a href="https://github.com/aws/aws-lambda-base-images">ベースイメージ</a> も公開されており、自由なカスタマイズが可能となっています。</p>
+<h3 id="lambdaでコンテナイメージを使用するメリット"><a class="header" href="#lambdaでコンテナイメージを使用するメリット">Lambdaでコンテナイメージを使用するメリット</a></h3>
+<ul>
+<li>ローカル環境での確認が容易</li>
+<li>大きなプログラムをデプロイできる（250 MB → <strong>10 GB</strong>）
+<ul>
+<li>従来はパッケージ等を追加するとすぐに上限に達していた</li>
+<li>Cloud9 上で zip ファイルを作成しレイヤーを追加するなどの手間が不要に</li>
+</ul>
+</li>
+</ul>
+<p>使い方は簡単です。</p>
+<p>以下のようなイメージをビルドし ECR に Push しておき、Lambda 作成時にイメージを指定します。</p>
+<pre><code class="language-docker">FROM public.ecr.aws/lambda/python:3.8
+
+COPY app.py {LAMBDA_TASK_ROOT}
+
+# 実行される関数
+CMD [ &quot;app.handler&quot; ]
+</code></pre>
+<h2 id="sam-で-シンプルな-api-を作成してみる"><a class="header" href="#sam-で-シンプルな-api-を作成してみる">SAM で シンプルな API を作成してみる</a></h2>
+<h3 id="sam-init-samテンプレートを作成"><a class="header" href="#sam-init-samテンプレートを作成">sam init: SAMテンプレートを作成</a></h3>
+<p>次のコマンドを実行してみましょう。</p>
+<pre><code class="language-bash">sam init
+</code></pre>
+<p>次のように聞かれるため、今回は以下のように選択してみます。</p>
+<pre><code class="language-bash">Which template source would you like to use?
+	1 - AWS Quick Start Templates
+	2 - Custom Template LocationWhich template source would you like to use?
+	1 - AWS Quick Start Templates
+	2 - Custom Template Location
+Choice: 1
+What package type would you like to use?
+	1 - Zip (artifact is a zip uploaded to S3)
+	2 - Image (artifact is an image uploaded to an ECR image repository)
+Package type: 2
+
+Which base image would you like to use?
+	1 - amazon/nodejs14.x-base
+	2 - amazon/nodejs12.x-base
+	3 - amazon/nodejs10.x-base
+	4 - amazon/python3.8-base
+	5 - amazon/python3.7-base
+	6 - amazon/python3.6-base
+	7 - amazon/python2.7-base
+	8 - amazon/ruby2.7-base
+	9 - amazon/ruby2.5-base
+	10 - amazon/go1.x-base
+	11 - amazon/java11-base
+	12 - amazon/java8.al2-base
+	13 - amazon/java8-base
+	14 - amazon/dotnet5.0-base
+	15 - amazon/dotnetcore3.1-base
+	16 - amazon/dotnetcore2.1-base
+Base image: 4
+
+Project name [sam-app]: workshop-sam
+
+Cloning app templates from https://github.com/aws/aws-sam-cli-app-templates
+
+AWS quick start application templates:
+	1 - Hello World Lambda Image Example
+	2 - PyTorch Machine Learning Inference API
+	3 - Scikit-learn Machine Learning Inference API
+	4 - Tensorflow Machine Learning Inference API
+	5 - XGBoost Machine Learning Inference API
+Template selection: 3
+</code></pre>
+<h3 id="テンプレートの確認"><a class="header" href="#テンプレートの確認">テンプレートの確認</a></h3>
+<p><code>sam init</code> で生成されたプロジェクトは次のような構造になっています。</p>
+<pre><code>.
+├── README.md
+├── __init__.py
+├── app
+│   ├── Dockerfile
+│   ├── __init__.py
+│   ├── app.py
+│   ├── model
+│   └── requirements.txt
+├── events
+│   └── event.json
+├── template.yml
+└── training.ipynb
+</code></pre>
+<p><code>training.ipynb</code> でモデルを作成（学習）しており、画像から数字を認識できるようです。</p>
+<p><code>app.py</code> を呼び出すことで推論ができます。</p>
+<p><code>app</code> 配下に以下のような<code>Dockerfile</code>が生成されます。</p>
+<pre><code class="language-docker">FROM public.ecr.aws/lambda/python:3.8
+
+COPY app.py requirements.txt ./
+COPY model /opt/ml/model
+
+RUN python3.8 -m pip install -r requirements.txt -t .
+
+CMD [&quot;app.lambda_handler&quot;]
+</code></pre>
+<h3 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h3>
+<p>先ほど作成されたディレクトリへ移動し、次のコマンドを実行します。</p>
+<pre><code class="language-bash">sam build
+</code></pre>
+<p>以下のような表示になれば成功です。</p>
+<pre><code>(略)
+Build Succeeded
+
+Built Artifacts  : .aws-sam/build
+Built Template   : .aws-sam/build/template.yaml
+
+Commands you can use next
+=========================
+[*] Invoke Function: sam local invoke
+[*] Deploy: sam deploy --guided
+</code></pre>
+<h2 id="ローカル環境で実行してみる"><a class="header" href="#ローカル環境で実行してみる">ローカル環境で実行してみる</a></h2>
+<h3 id="lambdaを実行"><a class="header" href="#lambdaを実行">Lambdaを実行</a></h3>
+<p><code>sam local invoke</code>  コマンドによりローカル環境で実行することができます。</p>
+<pre><code class="language-bash">sam local invoke InferenceFunction --event events/event.json
+</code></pre>
+<p>実行結果は以下のようになります。</p>
+<pre><code>Invoking Container created from inferencefunction:python3.8-v1
+Building image..........
+Skip pulling image and use local one: inferencefunction:rapid-1.23.0.
+
+START RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7 Version: LATEST
+END RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7
+REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Duration: 2928.78 ms	Billed Duration: 3000 ms	Memory Size: 5000 MB	Max Memory Used: 5000 MB
+{&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;{\&quot;predicted_label\&quot;: 3}&quot;}
+</code></pre>
+<h3 id="api-を実行"><a class="header" href="#api-を実行">API を実行</a></h3>
+<p><code>sam local start-api</code> コマンドを実行すると、ローカル環境で API サーバが立ち上がります。</p>
+<p>パスについては <code>template.yml</code> の Resources セクション に記載します。</p>
+<p><code>http://127.0.0.1:3000/classify_digit</code>  がサンプルのエンドポイントとなります。</p>
+<pre><code class="language-bash">curl -X POST http://127.0.0.1:3000/classify_digit -d &quot;iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAABQGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGDiSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8rAyCDLIMQgxsCZmFxc4BgQ4ANUwgCjUcG3a0DVQHBZF2TWwmPutxO7FLa+827S7Tlpdx1TPQrgSkktTgbSf4A4IbmgqISBgTEGyFYuLykAsRuAbJEioKOA7CkgdjqEvQLEToKw94DVhAQ5A9kXgGyB5IzEFCD7AZCtk4Qkno7EhtoLAmxhwUYmFgQcSiooSa0oAdHO+QWVRZnpGSUKjsDQSVXwzEvW01EwMjAyZGAAhTVE9ecb4DBkFONAiMVeYmDQnwjyN0IsX5yB4RAHAwNPMUJM8w0DA18aA8NRtYLEokS4Axi/sRSnGRtB2NzbGRhYp/3//zmcgYFdk4Hh7/X//39v////7zIGBuZbDAwHvgEAq4heIf06wrwAAABWZVhJZk1NACoAAAAIAAGHaQAEAAAAAQAAABoAAAAAAAOShgAHAAAAEgAAAESgAgAEAAAAAQAAAH+gAwAEAAAAAQAAAIQAAAAAQVNDSUkAAABTY3JlZW5zaG90j9MWGwAAAYpJREFUeJy1kM0rRGEUxp/7uu64w+iaQphp8jHlIwkhH8lIaiQLZSE2NpKtZGHh35CUP8AWOwuKQkwmmUz5GLIRjTAxd65zLG5j7h2WnN3p1/Oc3/sC/zLSryv/gPkurX+SAYjr5V0AgJxG7qa+msL6KgBAsxB7KWvf7F5cJ2ZmMgxKrJVbk1LKo3E0LFNOpV8lZ5lqhbQtPB+XEcHCt9AiP4Sf7KK5eQ4BAOVbST6ZtAshZSqUDFXKiEWyIABI3oa+gFfQ0bEdiqJiJxUPD3vlz9uzU9igozHQVWFodcT0tLp+Y+/zbySIiJnJOBjIgT1J7x+cgiSRQ2npCT/YIMcWe5MxBucOzmiKyEoa0Rs2GMD9uMbIgoBuHvcpGROzQa0rMFelf8GdgTIA1T/WNH8BQHK3z3UrZJAF+pcCeSNXBCrtbKuVzrc3ny1Qay3Sp97BcHmcr0crh/d6+vUAqqeDjQBAby/R/d0d/fumBEAuDU50qI+34avHi1Dc+m+mbdtoWSQUumP80XwBdwyOoPfHcDkAAAAASUVORK5CYII=&quot;
+</code></pre>
+<ul>
+<li>GUI からリクエストしてみる</li>
+</ul>
+<p>Talend API Tester から画像を送信してみます。</p>
+<p><a href="https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm">Talend API Tester - Free Edition</a></p>
+<p>画像のサンプルは GitHub に載せてあります。</p>
+<p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" /></p>
+<p>分類結果が返されることが確認できました。</p>
+<h2 id="実際にawsにデプロイするまでの手順"><a class="header" href="#実際にawsにデプロイするまでの手順">実際にAWSにデプロイするまでの手順</a></h2>
+<h3 id="ecr-にリポジトリを作成"><a class="header" href="#ecr-にリポジトリを作成">ECR にリポジトリを作成</a></h3>
+<p>コンテナイメージを使用する場合はリポジトリが必要になります。</p>
+<p>DockerHub には対応していません。</p>
+<p>手順に関しては以下に記載があります。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/getting-started-cli.html">Amazon ECR をAWS CLI</a></p>
+<ul>
+<li>リポジトリを作成</li>
+</ul>
+<pre><code class="language-bash">aws ecr create-repository --repository-name workshop-sam-intro
+</code></pre>
+<ul>
+<li>ECRにログイン</li>
+</ul>
+<pre><code class="language-bash">aws ecr get-login-password | docker login \
+  --username AWS \
+  --password-stdin ***********.dkr.ecr.ap-northeast-1.amazonaws.com/workshop-sam-intro
+Login Succeeded
+</code></pre>
+<h3 id="sam-deploy-コマンドでデプロイ"><a class="header" href="#sam-deploy-コマンドでデプロイ">sam deploy コマンドでデプロイ</a></h3>
+<p><code>sam deploy</code> コマンドでデプロイが開始されます。</p>
+<p>CloudFormation スタックの作成や ECRへのPushも行われます。</p>
+<p><code>sam deploy —guided</code> とすることでガイド付きのインタラクティブなモードになります。</p>
+<p>実行してみます。</p>
+<pre><code class="language-bash">sam deploy --guided
+</code></pre>
+<p>いくつか質問されます。</p>
+<blockquote>
+<p>Stack Name</p>
+</blockquote>
+<p>指定した名前で CloudFormation のスタックが作成されます。</p>
+<p>今回は <code>workshop-sam-intro</code> と名前をつけておきます。</p>
+<blockquote>
+<p>InferenceFunction may not have authorization defined, Is this okay?</p>
+</blockquote>
+<p>今回は認証を付けていないためこちらの質問には No と回答します。</p>
+<pre><code>
+Configuring SAM deploy
+======================
+
+        Looking for config file [samconfig.toml] :  Not found
+
+        Setting default arguments for 'sam deploy'
+        =========================================
+        Stack Name [sam-app]: workshop-sam-intro                        
+        AWS Region [ap-northeast-1]: 
+        Image Repository for InferenceFunction: ************.dkr.ecr.ap-northeast-1.amazonaws.com/workshop-sam-intro
+          inferencefunction:python3.8-v1 to be pushed to ************.dkr.ecr.ap-northeast-1.amazonaws.com/workshop-sam-intro:inferencefunction-4aaf9d3e4560-python3.8-v1
+
+        #Shows you resources changes to be deployed and require a 'Y' to initiate deploy
+        Confirm changes before deploy [y/N]: y
+        #SAM needs permission to be able to create roles to connect to the resources in your template
+        Allow SAM CLI IAM role creation [Y/n]: y
+        InferenceFunction may not have authorization defined, Is this okay? [y/N]: y
+        Save arguments to configuration file [Y/n]: y
+        SAM configuration file [samconfig.toml]: 
+        SAM configuration environment [default]: 
+</code></pre>
+<ul>
+<li>CloudFormation の change set が表示されます。</li>
+</ul>
+<pre><code>CloudFormation stack changeset
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Operation                                 LogicalResourceId                         ResourceType                              Replacement                             
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
++ Add                                     InferenceFunctionInferencePermissionPro   AWS::Lambda::Permission                   N/A                                     
+                                          d                                                                                                                           
++ Add                                     InferenceFunctionRole                     AWS::IAM::Role                            N/A                                     
++ Add                                     InferenceFunction                         AWS::Lambda::Function                     N/A                                     
++ Add                                     ServerlessRestApiDeployment50b627a8a5     AWS::ApiGateway::Deployment               N/A                                     
++ Add                                     ServerlessRestApiProdStage                AWS::ApiGateway::Stage                    N/A                                     
++ Add                                     ServerlessRestApi                         AWS::ApiGateway::RestApi                  N/A                                     
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+</code></pre>
+<p>しばらく待つと完了します。</p>
+<p>※ 実際にはアカウントIDも表示されています。</p>
+<pre><code>（略）
+                                                                               
+CREATE_COMPLETE                           AWS::CloudFormation::Stack                workshop-sam-intro                        -                                       
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+CloudFormation outputs from deployed stack
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Outputs                                                                                                                                                              
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Key                 InferenceApi                                                                                                                                     
+Description         API Gateway endpoint URL for Prod stage for Inference function                                                                                   
+Value               https://zz3wr4lyre.execute-api.ap-northeast-1.amazonaws.com/Prod/classify_digit/                                                                 
+
+Key                 InferenceFunctionIamRole                                                                                                                         
+Description         Implicit IAM Role created for Inference function                                                                                                 
+Value               arn:aws:lambda:ap-northeast-1:************:function:workshop-sam-intro-InferenceFunction-nO6DAeNnjEfr                                            
+
+Key                 InferenceFunction                                                                                                                                
+Description         Inference Lambda Function ARN                                                                                                                    
+Value               arn:aws:lambda:ap-northeast-1:************:function:workshop-sam-intro-InferenceFunction-nO6DAeNnjEfr                                            
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Successfully created/updated stack - workshop-sam-intro in ap-northeast-1
+</code></pre>
+<p>API のエンドポイント <code>https://zz3wr4lyre.execute-api.ap-northeast-1.amazonaws.com/Prod/classify_digit/</code> が表示されているので、こちらにリクエストを送ってみます。</p>
+<p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628661865/ot/ag_ybbys9.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628661865/ot/ag_ybbys9.png" /></p>
+<p>結果が得られ、デプロイされていることが確認できました。</p>
+<h3 id="作成したスタックを削除する"><a class="header" href="#作成したスタックを削除する">作成したスタックを削除する</a></h3>
+<p>上記の手順で作成したAPIは公開しているため、最後に削除しておきます。</p>
+<p>削除する場合は SAM ではなく CloudFormation から削除する必要があります。</p>
+<p><code>sam deploy</code> でデプロイした際に設定したスタック名を指定して削除します。</p>
+<pre><code>aws cloudformation delete-stack --stack-name workshop-sam-intro
+</code></pre>
+<h2 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h2>
+<p>AWS SAM を利用すると簡単な設定でサーバレスなAPIを立ち上げることができます。</p>
+<p>また、Lambda ではコンテナイメージに対応しているため、依存関係のあるアプリケーション等には積極的に使用することをおすすめします。</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>
