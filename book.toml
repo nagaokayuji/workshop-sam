@@ -1,0 +1,12 @@
+[book]
+authors = ["Yuji Nagaoka"]
+language = "ja"
+multilingual = false
+src = "src"
+title = "AWS SAM ハンズオン"
+description = "workshop materials"
+
+[preprocessor.katex]
+
+[output.html]
+no-section-label = true
