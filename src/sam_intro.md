@@ -2,29 +2,31 @@
 
 AWS SAM (Serverless Application Model) は IaaS (Infrastructure as Code) のフレームワークで、AWS CloudFormation から拡張されたものです。
 
-CloudFormation をよく知らなくても問題なく利用できます。
+CloudFormation についてよく知らなくても問題なく利用できます。
 
-オープンソースのため、以下のリポジトリで公開されています。
+また、オープンソースのため以下のリポジトリで公開されています。
 
 [GitHub - aws/serverless-application-model: AWS Serverless Application Model (SAM) is an open-source framework for building serverless applications](https://github.com/aws/serverless-application-model)
 
-## インストール
+## 事前準備
 
-AWS SAM CLI を使用します。以下を参照してインストールします。
+AWS SAM CLI を使用します。
+
+インストール方法に関してはいかに記載があります。
 
 [AWS SAM CLI のインストール](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 
-また、今回は Docker も使用します。インストールされていない場合は以下よりインストールしておいてください。
+また、今回 Docker も使用します。インストールされていない場合は以下よりインストールしておいてください。
 
 [Get Docker](https://docs.docker.com/get-docker/)
 
 以降 SAM CLI を利用して進めていきます。
 
-適宜こちらのリファレンスを参照することをおすすめします。
+適宜こちらのリファレンスを参照して進めていくことをお勧めします。
 
 [AWS SAMCLI コマンドリファレンス](https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html)
 
-## コンテナイメージのサポート
+## Lambda コンテナイメージのサポートについて
 
 2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。今回はこちらの機能も使っていきます。
 
