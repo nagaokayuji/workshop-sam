@@ -147,18 +147,19 @@
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="aws-sam入門ハンズオン"><a class="header" href="#aws-sam入門ハンズオン">AWS SAM入門ハンズオン</a></h1>
 <p>AWS SAM (Serverless Application Model) は IaaS (Infrastructure as Code) のフレームワークで、AWS CloudFormation から拡張されたものです。</p>
-<p>CloudFormation をよく知らなくても問題なく利用できます。</p>
-<p>オープンソースのため、以下のリポジトリで公開されています。</p>
+<p>CloudFormation についてよく知らなくても問題なく利用できます。</p>
+<p>また、オープンソースのため以下のリポジトリで公開されています。</p>
 <p><a href="https://github.com/aws/serverless-application-model">GitHub - aws/serverless-application-model: AWS Serverless Application Model (SAM) is an open-source framework for building serverless applications</a></p>
-<h2 id="インストール"><a class="header" href="#インストール">インストール</a></h2>
-<p>AWS SAM CLI を使用します。以下を参照してインストールします。</p>
+<h2 id="事前準備"><a class="header" href="#事前準備">事前準備</a></h2>
+<p>AWS SAM CLI を使用します。</p>
+<p>インストール方法に関してはいかに記載があります。</p>
 <p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html">AWS SAM CLI のインストール</a></p>
-<p>また、今回は Docker も使用します。インストールされていない場合は以下よりインストールしておいてください。</p>
+<p>また、今回 Docker も使用します。インストールされていない場合は以下よりインストールしておいてください。</p>
 <p><a href="https://docs.docker.com/get-docker/">Get Docker</a></p>
 <p>以降 SAM CLI を利用して進めていきます。</p>
-<p>適宜こちらのリファレンスを参照することをおすすめします。</p>
+<p>適宜こちらのリファレンスを参照して進めていくことをお勧めします。</p>
 <p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html">AWS SAMCLI コマンドリファレンス</a></p>
-<h2 id="コンテナイメージのサポート"><a class="header" href="#コンテナイメージのサポート">コンテナイメージのサポート</a></h2>
+<h2 id="lambda-コンテナイメージのサポートについて"><a class="header" href="#lambda-コンテナイメージのサポートについて">Lambda コンテナイメージのサポートについて</a></h2>
 <p>2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。今回はこちらの機能も使っていきます。</p>
 <p><a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">AWS Lambda の新機能 - コンテナイメージのサポート | Amazon Web Services</a></p>
 <p>以下の言語のイメージが公開されています。</p>
