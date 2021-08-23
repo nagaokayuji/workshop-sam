@@ -1,5 +1,7 @@
 # AWS SAM入門ハンズオン
 
+## AWS Serverless Application Model (SAM) とは？
+
 AWS SAM (Serverless Application Model) は IaaS (Infrastructure as Code) のフレームワークで、AWS CloudFormation から拡張されたものです。
 
 CloudFormation についてよく知らなくても問題なく利用できます。

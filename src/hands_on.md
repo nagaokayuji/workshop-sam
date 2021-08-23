@@ -1,8 +1,6 @@
-# ハンズオン
+# SAM で シンプルな API を作成してみる (ハンズオン)
 
-## SAM で シンプルな API を作成してみる
-
-### sam init: SAMテンプレートを作成
+## sam init: SAMテンプレートを作成
 
 次のコマンドを実行してみましょう。
 
@@ -56,7 +54,7 @@ AWS quick start application templates:
 Template selection: 3
 ```
 
-### テンプレートの確認
+## テンプレートの確認
 
 `sam init` で生成されたプロジェクトは次のような構造になっています。
 
@@ -93,7 +91,7 @@ RUN python3.8 -m pip install -r requirements.txt -t .
 CMD ["app.lambda_handler"]
 ```
 
-### sam build: ビルド
+## sam build: ビルド
 
 先ほど作成されたディレクトリへ移動し、次のコマンドを実行します。
 
@@ -116,9 +114,9 @@ Commands you can use next
 [*] Deploy: sam deploy --guided
 ```
 
-## ローカル環境で実行してみる
+# ローカル環境で実行してみる
 
-### Lambdaを実行
+## Lambdaを実行
 
 `sam local invoke`  コマンドによりローカル環境で実行することができます。
 
@@ -139,7 +137,7 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
 {"statusCode": 200, "body": "{\"predicted_label\": 3}"}
 ```
 
-### API を実行
+## API を実行
 
 `sam local start-api` コマンドを実行すると、ローカル環境で API サーバが立ち上がります。
 
@@ -163,9 +161,9 @@ Talend API Tester から画像を送信してみます。
 
 分類結果が返されることが確認できました。
 
-## 実際にAWSにデプロイするまでの手順
+# 実際にAWSにデプロイするまでの手順
 
-### ECR にリポジトリを作成
+## ECR にリポジトリを作成
 
 コンテナイメージを使用する場合はリポジトリが必要になります。
 
@@ -190,7 +188,7 @@ aws ecr get-login-password | docker login \
 Login Succeeded
 ```
 
-### sam deploy コマンドでデプロイ
+## sam deploy コマンドでデプロイ
 
 `sam deploy` コマンドでデプロイが開始されます。
 
@@ -294,7 +292,7 @@ API のエンドポイント `https://zz3wr4lyre.execute-api.ap-northeast-1.amaz
 
 結果が得られ、デプロイされていることが確認できました。
 
-### 作成したスタックを削除する
+## 作成したスタックを削除する
 
 上記の手順で作成したAPIは公開しているため、最後に削除しておきます。
 
