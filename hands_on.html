@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ハンズオン - AWS SAM ハンズオン</title>
+        <title>シンプルな API を作成してみる(ハンズオン) - AWS SAM ハンズオン</title>
                 
 
         <!-- Custom HTML head -->
@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">1.</strong> 事前準備</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">2.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="hands_on.html" class="active"><strong aria-hidden="true">3.</strong> ハンズオン</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">4.</strong> まとめ</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="hands_on.html" class="active"><strong aria-hidden="true">2.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">2.1.</strong> 事前準備</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">3.</strong> まとめ</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -144,9 +144,8 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="ハンズオン"><a class="header" href="#ハンズオン">ハンズオン</a></h1>
-<h2 id="sam-で-シンプルな-api-を作成してみる"><a class="header" href="#sam-で-シンプルな-api-を作成してみる">SAM で シンプルな API を作成してみる</a></h2>
-<h3 id="sam-init-samテンプレートを作成"><a class="header" href="#sam-init-samテンプレートを作成">sam init: SAMテンプレートを作成</a></h3>
+<h1 id="sam-で-シンプルな-api-を作成してみる-ハンズオン"><a class="header" href="#sam-で-シンプルな-api-を作成してみる-ハンズオン">SAM で シンプルな API を作成してみる (ハンズオン)</a></h1>
+<h2 id="sam-init-samテンプレートを作成"><a class="header" href="#sam-init-samテンプレートを作成">sam init: SAMテンプレートを作成</a></h2>
 <p>次のコマンドを実行してみましょう。</p>
 <pre><code class="language-bash">sam init
 </code></pre>
@@ -193,7 +192,7 @@ AWS quick start application templates:
 	5 - XGBoost Machine Learning Inference API
 Template selection: 3
 </code></pre>
-<h3 id="テンプレートの確認"><a class="header" href="#テンプレートの確認">テンプレートの確認</a></h3>
+<h2 id="テンプレートの確認"><a class="header" href="#テンプレートの確認">テンプレートの確認</a></h2>
 <p><code>sam init</code> で生成されたプロジェクトは次のような構造になっています。</p>
 <pre><code>.
 ├── README.md
@@ -221,7 +220,7 @@ RUN python3.8 -m pip install -r requirements.txt -t .
 
 CMD [&quot;app.lambda_handler&quot;]
 </code></pre>
-<h3 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h3>
+<h2 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h2>
 <p>先ほど作成されたディレクトリへ移動し、次のコマンドを実行します。</p>
 <pre><code class="language-bash">sam build
 </code></pre>
@@ -237,8 +236,8 @@ Commands you can use next
 [*] Invoke Function: sam local invoke
 [*] Deploy: sam deploy --guided
 </code></pre>
-<h2 id="ローカル環境で実行してみる"><a class="header" href="#ローカル環境で実行してみる">ローカル環境で実行してみる</a></h2>
-<h3 id="lambdaを実行"><a class="header" href="#lambdaを実行">Lambdaを実行</a></h3>
+<h1 id="ローカル環境で実行してみる"><a class="header" href="#ローカル環境で実行してみる">ローカル環境で実行してみる</a></h1>
+<h2 id="lambdaを実行"><a class="header" href="#lambdaを実行">Lambdaを実行</a></h2>
 <p><code>sam local invoke</code>  コマンドによりローカル環境で実行することができます。</p>
 <pre><code class="language-bash">sam local invoke InferenceFunction --event events/event.json
 </code></pre>
@@ -252,7 +251,7 @@ END RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7
 REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Duration: 2928.78 ms	Billed Duration: 3000 ms	Memory Size: 5000 MB	Max Memory Used: 5000 MB
 {&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;{\&quot;predicted_label\&quot;: 3}&quot;}
 </code></pre>
-<h3 id="api-を実行"><a class="header" href="#api-を実行">API を実行</a></h3>
+<h2 id="api-を実行"><a class="header" href="#api-を実行">API を実行</a></h2>
 <p><code>sam local start-api</code> コマンドを実行すると、ローカル環境で API サーバが立ち上がります。</p>
 <p>パスについては <code>template.yml</code> の Resources セクション に記載します。</p>
 <p><code>http://127.0.0.1:3000/classify_digit</code>  がサンプルのエンドポイントとなります。</p>
@@ -266,8 +265,8 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
 <p>画像のサンプルは GitHub に載せてあります。</p>
 <p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" /></p>
 <p>分類結果が返されることが確認できました。</p>
-<h2 id="実際にawsにデプロイするまでの手順"><a class="header" href="#実際にawsにデプロイするまでの手順">実際にAWSにデプロイするまでの手順</a></h2>
-<h3 id="ecr-にリポジトリを作成"><a class="header" href="#ecr-にリポジトリを作成">ECR にリポジトリを作成</a></h3>
+<h1 id="実際にawsにデプロイするまでの手順"><a class="header" href="#実際にawsにデプロイするまでの手順">実際にAWSにデプロイするまでの手順</a></h1>
+<h2 id="ecr-にリポジトリを作成"><a class="header" href="#ecr-にリポジトリを作成">ECR にリポジトリを作成</a></h2>
 <p>コンテナイメージを使用する場合はリポジトリが必要になります。</p>
 <p>DockerHub には対応していません。</p>
 <p>手順に関しては以下に記載があります。</p>
@@ -285,7 +284,7 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
   --password-stdin ***********.dkr.ecr.ap-northeast-1.amazonaws.com/workshop-sam-intro
 Login Succeeded
 </code></pre>
-<h3 id="sam-deploy-コマンドでデプロイ"><a class="header" href="#sam-deploy-コマンドでデプロイ">sam deploy コマンドでデプロイ</a></h3>
+<h2 id="sam-deploy-コマンドでデプロイ"><a class="header" href="#sam-deploy-コマンドでデプロイ">sam deploy コマンドでデプロイ</a></h2>
 <p><code>sam deploy</code> コマンドでデプロイが開始されます。</p>
 <p>CloudFormation スタックの作成や ECRへのPushも行われます。</p>
 <p><code>sam deploy —guided</code> とすることでガイド付きのインタラクティブなモードになります。</p>
@@ -370,7 +369,7 @@ Successfully created/updated stack - workshop-sam-intro in ap-northeast-1
 <p>API のエンドポイント <code>https://zz3wr4lyre.execute-api.ap-northeast-1.amazonaws.com/Prod/classify_digit/</code> が表示されているので、こちらにリクエストを送ってみます。</p>
 <p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628661865/ot/ag_ybbys9.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628661865/ot/ag_ybbys9.png" /></p>
 <p>結果が得られ、デプロイされていることが確認できました。</p>
-<h3 id="作成したスタックを削除する"><a class="header" href="#作成したスタックを削除する">作成したスタックを削除する</a></h3>
+<h2 id="作成したスタックを削除する"><a class="header" href="#作成したスタックを削除する">作成したスタックを削除する</a></h2>
 <p>上記の手順で作成したAPIは公開しているため、最後に削除しておきます。</p>
 <p>削除する場合は SAM ではなく CloudFormation から削除する必要があります。</p>
 <p><code>sam deploy</code> でデプロイした際に設定したスタック名を指定して削除します。</p>
@@ -385,7 +384,7 @@ Successfully created/updated stack - workshop-sam-intro in ap-northeast-1
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="conclusion.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="preparation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -399,7 +398,7 @@ Successfully created/updated stack - workshop-sam-intro in ap-northeast-1
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="conclusion.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="preparation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>
