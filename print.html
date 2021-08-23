@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="sam_intro.html">AWS SAM ハンズオン</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">1.</strong> 事前準備</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">2.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> ハンズオン</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">4.</strong> まとめ</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -150,7 +150,8 @@
 <p>CloudFormation についてよく知らなくても問題なく利用できます。</p>
 <p>また、オープンソースのため以下のリポジトリで公開されています。</p>
 <p><a href="https://github.com/aws/serverless-application-model">GitHub - aws/serverless-application-model: AWS Serverless Application Model (SAM) is an open-source framework for building serverless applications</a></p>
-<h2 id="事前準備"><a class="header" href="#事前準備">事前準備</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="事前準備"><a class="header" href="#事前準備">事前準備</a></h1>
 <p>AWS SAM CLI を使用します。</p>
 <p>インストール方法に関してはいかに記載があります。</p>
 <p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html">AWS SAM CLI のインストール</a></p>
@@ -159,7 +160,8 @@
 <p>以降 SAM CLI を利用して進めていきます。</p>
 <p>適宜こちらのリファレンスを参照して進めていくことをお勧めします。</p>
 <p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html">AWS SAMCLI コマンドリファレンス</a></p>
-<h2 id="lambda-コンテナイメージのサポートについて"><a class="header" href="#lambda-コンテナイメージのサポートについて">Lambda コンテナイメージのサポートについて</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="lambdaコンテナイメージのサポートについて"><a class="header" href="#lambdaコンテナイメージのサポートについて">Lambdaコンテナイメージのサポートについて</a></h1>
 <p>2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。今回はこちらの機能も使っていきます。</p>
 <p><a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">AWS Lambda の新機能 - コンテナイメージのサポート | Amazon Web Services</a></p>
 <p>以下の言語のイメージが公開されています。</p>
@@ -172,7 +174,7 @@
 <li>.NET</li>
 </ul>
 <p>また、<a href="https://github.com/aws/aws-lambda-base-images">ベースイメージ</a> も公開されており、自由なカスタマイズが可能となっています。</p>
-<h3 id="lambdaでコンテナイメージを使用するメリット"><a class="header" href="#lambdaでコンテナイメージを使用するメリット">Lambdaでコンテナイメージを使用するメリット</a></h3>
+<h2 id="lambdaでコンテナイメージを使用するメリット"><a class="header" href="#lambdaでコンテナイメージを使用するメリット">Lambdaでコンテナイメージを使用するメリット</a></h2>
 <ul>
 <li>ローカル環境での確認が容易</li>
 <li>大きなプログラムをデプロイできる（250 MB → <strong>10 GB</strong>）
@@ -191,6 +193,8 @@ COPY app.py {LAMBDA_TASK_ROOT}
 # 実行される関数
 CMD [ &quot;app.handler&quot; ]
 </code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="ハンズオン"><a class="header" href="#ハンズオン">ハンズオン</a></h1>
 <h2 id="sam-で-シンプルな-api-を作成してみる"><a class="header" href="#sam-で-シンプルな-api-を作成してみる">SAM で シンプルな API を作成してみる</a></h2>
 <h3 id="sam-init-samテンプレートを作成"><a class="header" href="#sam-init-samテンプレートを作成">sam init: SAMテンプレートを作成</a></h3>
 <p>次のコマンドを実行してみましょう。</p>
@@ -422,7 +426,8 @@ Successfully created/updated stack - workshop-sam-intro in ap-northeast-1
 <p><code>sam deploy</code> でデプロイした際に設定したスタック名を指定して削除します。</p>
 <pre><code>aws cloudformation delete-stack --stack-name workshop-sam-intro
 </code></pre>
-<h2 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h1>
 <p>AWS SAM を利用すると簡単な設定でサーバレスなAPIを立ち上げることができます。</p>
 <p>また、Lambda ではコンテナイメージに対応しているため、依存関係のあるアプリケーション等には積極的に使用することをおすすめします。</p>
 
