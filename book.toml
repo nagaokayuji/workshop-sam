@@ -9,4 +9,4 @@ description = "workshop materials"
 [preprocessor.katex]
 
 [output.html]
-no-section-label = true
+no-section-label = false
