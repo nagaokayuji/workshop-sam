@@ -310,6 +310,115 @@ RUN python3.8 -m pip install -r requirements.txt -t .
 
 CMD [&quot;app.lambda_handler&quot;]
 </code></pre>
+<h2 id="テンプレートファイルを確認"><a class="header" href="#テンプレートファイルを確認">テンプレートファイルを確認</a></h2>
+<p><code>template.yml</code> について見ていきます。</p>
+<pre><code class="language-yaml">AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Globals:
+  Function:
+    Timeout: 50
+    MemorySize: 5000
+  Api:
+    BinaryMediaTypes:
+      - image/png
+      - image/jpg
+      - image/jpeg
+
+Resources:
+  InferenceFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      PackageType: Image
+      Events:
+        Inference:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /classify_digit
+            Method: post
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./app
+      DockerTag: python3.8-v1
+
+Outputs:
+  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
+  # Find out more about other implicit resources you can reference within SAM
+  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
+  InferenceApi:
+    Description: &quot;API Gateway endpoint URL for Prod stage for Inference function&quot;
+    Value: !Sub &quot;https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/classify_digit/&quot;
+  InferenceFunction:
+    Description: &quot;Inference Lambda Function ARN&quot;
+    Value: !GetAtt InferenceFunction.Arn
+  InferenceFunctionIamRole:
+    Description: &quot;Implicit IAM Role created for Inference function&quot;
+    Value: !GetAtt InferenceFunction.Arn
+</code></pre>
+<h3 id="resources-セクション"><a class="header" href="#resources-セクション">Resources セクション</a></h3>
+<p><code>Resources</code> セクションでAPIを定義しています。</p>
+<pre><code class="language-yaml">Resources:
+  InferenceFunction:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      PackageType: Image
+      Events:
+        Inference:
+          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Properties:
+            Path: /classify_digit
+            Method: post
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./app
+      DockerTag: python3.8-v1
+</code></pre>
+<ul>
+<li><code>InferenceFunction</code> 
+<ul>
+<li>定義するAPIの名前です。</li>
+</ul>
+</li>
+<li><code>AWS::Serverless::Function</code> 
+<ul>
+<li>Lambda 関数を作成することを意味します。</li>
+</ul>
+</li>
+<li><code>Events</code>
+<ul>
+<li><code>Event source object</code> を定義します。
+<ul>
+<li>関数を呼び出すトリガーです。</li>
+<li><code>Type: Api</code> とすることで API Gateway 経由で呼び出すことになります。<sup class="footnote-reference"><a href="#1">1</a></sup></li>
+</ul>
+</li>
+<li><code>Properties</code>
+<ul>
+<li>API のメソッドとパスを定義します。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>Metadata</code>
+<ul>
+<li>コンテナイメージを使用する場合、次のメタデータの指定が必要です。</li>
+<li>Dockerfile
+<ul>
+<li>Lambda に関連付けられた Dockerfile の名前</li>
+</ul>
+</li>
+<li>DockerContext
+<ul>
+<li>Dockerfile の場所</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr />
+<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
+<p><code>AWS::Serverless::Api</code> を作成しなくても、Events で Api を設定しておけば暗黙的に作成してくれます。</p>
+</div>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h1>
 <p>早速ビルドしてみます。</p>
