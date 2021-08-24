@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> SAM テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="sam_init.html"><strong aria-hidden="true">3.1.</strong> SAM テンプレートを作成</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li><li class="chapter-item expanded "><a href="add_api.html" class="active"><strong aria-hidden="true">3.5.</strong> APIを追加してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> まとめ</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">6.</strong> 参考</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> SAM テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="sam_init.html"><strong aria-hidden="true">3.1.</strong> SAM テンプレートを作成</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li><li class="chapter-item expanded "><a href="add_api.html" class="active"><strong aria-hidden="true">3.5.</strong> APIを追加してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">5.</strong> 参考</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -145,6 +145,64 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="apiを追加してみる"><a class="header" href="#apiを追加してみる">APIを追加してみる</a></h1>
+<p>これまで、サンプルのプロジェクトを使用して動作確認ができました。</p>
+<p>では、APIを追加してみましょう。</p>
+<h2 id="apppy-に追加ハンドラを追加"><a class="header" href="#apppy-に追加ハンドラを追加">app.py に追加ハンドラを追加</a></h2>
+<p>サンプルと同じ<code>app.py</code>に以下のような関数を追加してみます。</p>
+<p>正常に呼び出されれば <code>message: Hello world</code> が返ってきます。</p>
+<pre><code class="language-python">def hello_world(event, context):
+    return {
+        'statusCode': 200,
+        'body': json.dumps(
+            {
+                &quot;message&quot;: &quot;Hello world&quot;
+            }
+        )
+    }
+</code></pre>
+<p>これをLambda関数として扱うため、テンプレートファイルのResourcesセクションに次の記述を追加します。</p>
+<pre><code class="language-yaml">  HelloFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image # コンテナイメージ
+      ImageConfig:
+        Command:
+          - &quot;app.hello_world&quot; # 実行する関数
+      Events: # イベントソース
+        Hello:
+          Type: Api # API Gateway
+          Properties:
+            Path: /hello
+            Method: get
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./app
+      DockerTag: python3.8-v1
+</code></pre>
+<p>このような数行の記述でAPIを追加することができます。</p>
+<p>記述を追加したのち、<code>sam build</code> でビルドしておきましょう。</p>
+<pre><code class="language-bash">sam build
+</code></pre>
+<h3 id="lambdaが実行できるか確認"><a class="header" href="#lambdaが実行できるか確認">Lambdaが実行できるか確認</a></h3>
+<p>先ほど定義した関数を実行してみます。</p>
+<p>まず、Lambdaを<code>invoke</code>できるか見てみます。</p>
+<pre><code class="language-bash">sam local invoke HelloFunction
+</code></pre>
+<p>実行すると以下のような結果が得られ、正しくLambda関数として定義できたことがわかります。</p>
+<pre><code>Invoking Container created from inferencefunction:python3.8-v1Building image.................Skip pulling image and use local one: inferencefunction:rapid-1.29.0.START RequestId: 24a9a3da-fa47-4c8b-8440-236fc95804ad Version: LATESTEND RequestId: 24a9a3da-fa47-4c8b-8440-236fc95804adREPORT RequestId: 24a9a3da-fa47-4c8b-8440-236fc95804ad  Init Duration: 0.92 ms  Duration: 2816.10 ms    Billed Duration: 2900 ms     Memory Size: 5000 MB    Max Memory Used: 5000 MB{&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;{\&quot;message\&quot;: \&quot;Hello world\&quot;}&quot;}b
+</code></pre>
+<h3 id="apiが実行できるか確認"><a class="header" href="#apiが実行できるか確認">APIが実行できるか確認</a></h3>
+<p>次に、APIを立ち上げて確認してみます。</p>
+<pre><code class="language-bash">sam local start-api
+</code></pre>
+<p><code>curl</code> でリクエストを送ってみます。</p>
+<pre><code class="language-bash">curl -X GET &quot;http://localhost:3000/hello&quot;
+</code></pre>
+<p>すると以下のように正常レスポンスが得られ、
+APIの実行も問題ないことが確認できます。</p>
+<pre><code class="language-json">{&quot;message&quot;: &quot;Hello world&quot;}
+</code></pre>
+<p>これにて追加のAPIを作成することができました。</p>
 
                     </main>
 
