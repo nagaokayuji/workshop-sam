@@ -16,23 +16,23 @@ model = joblib.load(model_file)
 def moments(image):
     c0, c1 = np.mgrid[:image.shape[0], :image.shape[1]]
     img_sum = np.sum(image)
-    
+
     m0 = np.sum(c0 * image) / img_sum
     m1 = np.sum(c1 * image) / img_sum
     m00 = np.sum((c0-m0)**2 * image) / img_sum
     m11 = np.sum((c1-m1)**2 * image) / img_sum
     m01 = np.sum((c0-m0) * (c1-m1) * image) / img_sum
-    
-    mu_vector = np.array([m0,m1])
-    covariance_matrix = np.array([[m00, m01],[m01, m11]])
-    
+
+    mu_vector = np.array([m0, m1])
+    covariance_matrix = np.array([[m00, m01], [m01, m11]])
+
     return mu_vector, covariance_matrix
 
 
 def deskew(image):
     c, v = moments(image)
-    alpha = v[0,1] / v[0,0]
-    affine = np.array([[1,0], [alpha,1]])
+    alpha = v[0, 1] / v[0, 0]
+    affine = np.array([[1, 0], [alpha, 1]])
     ocenter = np.array(image.shape) / 2.0
     offset = c - np.dot(affine, ocenter)
 
@@ -40,7 +40,8 @@ def deskew(image):
 
 
 def get_np_image(image_bytes):
-    image = Image.open(BytesIO(base64.b64decode(image_bytes))).convert(mode='L')
+    image = Image.open(
+        BytesIO(base64.b64decode(image_bytes))).convert(mode='L')
     image = image.resize((28, 28))
 
     return np.array(image)
@@ -59,6 +60,17 @@ def lambda_handler(event, context):
         'body': json.dumps(
             {
                 "predicted_label": prediction,
+            }
+        )
+    }
+
+
+def hello_world(event, context):
+    return {
+        'statusCode': 200,
+        'body': json.dumps(
+            {
+                "message": "Hello world"
             }
         )
     }
