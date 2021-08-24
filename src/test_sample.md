@@ -20,6 +20,14 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
 {"statusCode": 200, "body": "{\"predicted_label\": 3}"}
 ```
 
+レスポンス部分は以下です。
+```json
+{"statusCode": 200, "body": "{\"predicted_label\": 3}"
+```
+
+分類結果が`3`ということを意味しています。
+
+
 ## API を実行
 
 `sam local start-api` コマンドを実行すると、ローカル環境で API サーバが立ち上がります。
@@ -38,7 +46,11 @@ Talend API Tester から画像を送信してみます。
 
 [Talend API Tester - Free Edition](https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm)
 
-画像のサンプルは GitHub に載せてあります。
+![3](https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824473/202108/3_dvu0gl.png)
+![4](https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824461/202108/4_xotvfp.png)
+![5](https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824459/202108/5_drkx6e.png)
+
+※ 画像のサンプルは GitHub に載せてあります。
 
 ![https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png](https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png)
 
