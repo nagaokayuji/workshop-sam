@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>ローカル環境でサンプルを実行してみる - AWS SAM ハンズオン</title>
+        <title>参考 - AWS SAM ハンズオン</title>
                 
 
         <!-- Custom HTML head -->
@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> SAM テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="sam_init.html"><strong aria-hidden="true">3.1.</strong> SAM テンプレートを作成</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html" class="active"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li><li class="chapter-item expanded "><a href="add_api.html"><strong aria-hidden="true">3.5.</strong> APIを追加してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> まとめ</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">6.</strong> 参考</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> SAM テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="sam_init.html"><strong aria-hidden="true">3.1.</strong> SAM テンプレートを作成</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li><li class="chapter-item expanded "><a href="add_api.html"><strong aria-hidden="true">3.5.</strong> APIを追加してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> まとめ</a></li><li class="chapter-item expanded "><a href="references.html" class="active"><strong aria-hidden="true">6.</strong> 参考</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -144,54 +144,19 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="ローカル環境でサンプルを実行してみる"><a class="header" href="#ローカル環境でサンプルを実行してみる">ローカル環境でサンプルを実行してみる</a></h1>
-<h2 id="lambdaを実行"><a class="header" href="#lambdaを実行">Lambdaを実行</a></h2>
-<p><code>sam local invoke</code>  コマンドによりローカル環境で実行することができます。</p>
-<pre><code class="language-bash">sam local invoke InferenceFunction --event events/event.json
-</code></pre>
-<p>実行結果は以下のようになります。</p>
-<pre><code>Invoking Container created from inferencefunction:python3.8-v1
-Building image..........
-Skip pulling image and use local one: inferencefunction:rapid-1.23.0.
-
-START RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7 Version: LATEST
-END RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7
-REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Duration: 2928.78 ms	Billed Duration: 3000 ms	Memory Size: 5000 MB	Max Memory Used: 5000 MB
-{&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;{\&quot;predicted_label\&quot;: 3}&quot;}
-</code></pre>
-<p>レスポンス部分は以下です。</p>
-<pre><code class="language-json">{&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;{\&quot;predicted_label\&quot;: 3}&quot;
-</code></pre>
-<p>分類結果が<code>3</code>ということを意味しています。</p>
-<h2 id="api-を実行"><a class="header" href="#api-を実行">API を実行</a></h2>
-<p><code>sam local start-api</code> コマンドを実行すると、ローカル環境で API サーバが立ち上がります。</p>
-<p>パスについては <code>template.yml</code> の Resources セクション に記載します。</p>
-<p><code>http://127.0.0.1:3000/classify_digit</code>  がサンプルのエンドポイントとなります。</p>
-<pre><code class="language-bash">curl -X POST http://127.0.0.1:3000/classify_digit -d &quot;iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAAAAABXZoBIAAABQGlDQ1BJQ0MgUHJvZmlsZQAAeJxjYGDiSSwoyGFhYGDIzSspCnJ3UoiIjFJgf8rAyCDLIMQgxsCZmFxc4BgQ4ANUwgCjUcG3a0DVQHBZF2TWwmPutxO7FLa+827S7Tlpdx1TPQrgSkktTgbSf4A4IbmgqISBgTEGyFYuLykAsRuAbJEioKOA7CkgdjqEvQLEToKw94DVhAQ5A9kXgGyB5IzEFCD7AZCtk4Qkno7EhtoLAmxhwUYmFgQcSiooSa0oAdHO+QWVRZnpGSUKjsDQSVXwzEvW01EwMjAyZGAAhTVE9ecb4DBkFONAiMVeYmDQnwjyN0IsX5yB4RAHAwNPMUJM8w0DA18aA8NRtYLEokS4Axi/sRSnGRtB2NzbGRhYp/3//zmcgYFdk4Hh7/X//39v////7zIGBuZbDAwHvgEAq4heIf06wrwAAABWZVhJZk1NACoAAAAIAAGHaQAEAAAAAQAAABoAAAAAAAOShgAHAAAAEgAAAESgAgAEAAAAAQAAAH+gAwAEAAAAAQAAAIQAAAAAQVNDSUkAAABTY3JlZW5zaG90j9MWGwAAAYpJREFUeJy1kM0rRGEUxp/7uu64w+iaQphp8jHlIwkhH8lIaiQLZSE2NpKtZGHh35CUP8AWOwuKQkwmmUz5GLIRjTAxd65zLG5j7h2WnN3p1/Oc3/sC/zLSryv/gPkurX+SAYjr5V0AgJxG7qa+msL6KgBAsxB7KWvf7F5cJ2ZmMgxKrJVbk1LKo3E0LFNOpV8lZ5lqhbQtPB+XEcHCt9AiP4Sf7KK5eQ4BAOVbST6ZtAshZSqUDFXKiEWyIABI3oa+gFfQ0bEdiqJiJxUPD3vlz9uzU9igozHQVWFodcT0tLp+Y+/zbySIiJnJOBjIgT1J7x+cgiSRQ2npCT/YIMcWe5MxBucOzmiKyEoa0Rs2GMD9uMbIgoBuHvcpGROzQa0rMFelf8GdgTIA1T/WNH8BQHK3z3UrZJAF+pcCeSNXBCrtbKuVzrc3ny1Qay3Sp97BcHmcr0crh/d6+vUAqqeDjQBAby/R/d0d/fumBEAuDU50qI+34avHi1Dc+m+mbdtoWSQUumP80XwBdwyOoPfHcDkAAAAASUVORK5CYII=&quot;
-</code></pre>
-<ul>
-<li>GUI からリクエストしてみる</li>
-</ul>
-<p>Talend API Tester から画像を送信してみます。</p>
-<p><a href="https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm">Talend API Tester - Free Edition</a></p>
-<p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824473/202108/3_dvu0gl.png" alt="3" />
-<img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824461/202108/4_xotvfp.png" alt="4" />
-<img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824459/202108/5_drkx6e.png" alt="5" /></p>
-<p>※ 画像のサンプルは GitHub に載せてあります。</p>
-<p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" /></p>
-<p>分類結果が返されることが確認できました。</p>
+<h1 id="参考"><a class="header" href="#参考">参考</a></h1>
+<p><a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html">AWS SAM template anatomy - AWS Serverless Application Model</a></p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html">AWS SAMCLI コマンドリファレンス</a></p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html">AWS SAMCLI コマンドリファレンス</a></p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="build.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="conclusion.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="add_api.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
                         <div style="clear: both"></div>
                     </nav>
@@ -199,13 +164,10 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="build.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="conclusion.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="add_api.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                             </nav>
 
         </div>
