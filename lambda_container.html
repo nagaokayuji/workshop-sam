@@ -180,16 +180,6 @@
 </li>
 <li>ECRにレポジトリを作らないといけない</li>
 </ul>
-<h2 id="使い方"><a class="header" href="#使い方">使い方</a></h2>
-<p>使い方は簡単です。</p>
-<p>以下のようなイメージをビルドし ECR に Push しておき、Lambda 作成時にイメージを指定します。</p>
-<pre><code class="language-docker">FROM public.ecr.aws/lambda/python:3.8
-
-COPY app.py {LAMBDA_TASK_ROOT}
-
-# 実行される関数
-CMD [ &quot;app.handler&quot; ]
-</code></pre>
 
                     </main>
 
