@@ -1,16 +1,16 @@
 # 実際にAWSにデプロイするまでの手順
 
+実際にAWSにデプロイする際の手順について触れておきます。
+
 ## ECR にリポジトリを作成
 
+まず、
 コンテナイメージを使用する場合はリポジトリが必要になります。
 
 DockerHub には対応していません。
 
-手順に関しては以下に記載があります。
-
-[Amazon ECR をAWS CLI](https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/getting-started-cli.html)
-
 - リポジトリを作成
+以下のコマンドでレポジトリを作成します。
 
 ```bash
 aws ecr create-repository --repository-name workshop-sam-intro
@@ -41,13 +41,13 @@ sam deploy --guided
 
 いくつか質問されます。
 
-> Stack Name
+- `Stack Name` 
 
 指定した名前で CloudFormation のスタックが作成されます。
 
 今回は `workshop-sam-intro` と名前をつけておきます。
 
-> InferenceFunction may not have authorization defined, Is this okay?
+- `InferenceFunction may not have authorization defined, Is this okay?`
 
 今回は認証を付けていないためこちらの質問には No と回答します。
 
