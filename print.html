@@ -227,6 +227,8 @@ Outputs:
 # 作成したリソースの属性などをスタックのプロパティから返される値として定義できます。
 </code></pre>
 <p>このうち、SAM を使用する上で必須なものは <code>Transform</code> と <code>Resources</code> のみです。</p>
+<p>詳しくは以下を参照ください。</p>
+<p><a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html">AWS SAM template anatomy - AWS Serverless Application Model</a></p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="sam-で-シンプルな-api-を作成してみる-ハンズオン"><a class="header" href="#sam-で-シンプルな-api-を作成してみる-ハンズオン">SAM で シンプルな API を作成してみる (ハンズオン)</a></h1>
 <h2 id="今回扱うものについて"><a class="header" href="#今回扱うものについて">今回扱うものについて</a></h2>
@@ -317,7 +319,26 @@ RUN python3.8 -m pip install -r requirements.txt -t .
 
 CMD [&quot;app.lambda_handler&quot;]
 </code></pre>
-<h1 id="ローカル環境で実行してみる"><a class="header" href="#ローカル環境で実行してみる">ローカル環境で実行してみる</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h1>
+<p>早速ビルドしてみます。</p>
+<p>作成されたディレクトリへ移動し、次のコマンドを実行します。</p>
+<pre><code class="language-bash">sam build
+</code></pre>
+<p>以下のような表示になればビルド成功です。</p>
+<pre><code>(略)
+Build Succeeded
+
+Built Artifacts  : .aws-sam/build
+Built Template   : .aws-sam/build/template.yaml
+
+Commands you can use next
+=========================
+[*] Invoke Function: sam local invoke
+[*] Deploy: sam deploy --guided
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="ローカル環境でサンプルを実行してみる"><a class="header" href="#ローカル環境でサンプルを実行してみる">ローカル環境でサンプルを実行してみる</a></h1>
 <h2 id="lambdaを実行"><a class="header" href="#lambdaを実行">Lambdaを実行</a></h2>
 <p><code>sam local invoke</code>  コマンドによりローカル環境で実行することができます。</p>
 <pre><code class="language-bash">sam local invoke InferenceFunction --event events/event.json
@@ -347,34 +368,15 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
 <p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" /></p>
 <p>分類結果が返されることが確認できました。</p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h1>
-<p>早速ビルドしてみます。</p>
-<p>作成されたディレクトリへ移動し、次のコマンドを実行します。</p>
-<pre><code class="language-bash">sam build
-</code></pre>
-<p>以下のような表示になればビルド成功です。</p>
-<pre><code>(略)
-Build Succeeded
-
-Built Artifacts  : .aws-sam/build
-Built Template   : .aws-sam/build/template.yaml
-
-Commands you can use next
-=========================
-[*] Invoke Function: sam local invoke
-[*] Deploy: sam deploy --guided
-</code></pre>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="ローカル環境でサンプルを実行してみる"><a class="header" href="#ローカル環境でサンプルを実行してみる">ローカル環境でサンプルを実行してみる</a></h1>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="実際にawsにデプロイするまでの手順"><a class="header" href="#実際にawsにデプロイするまでの手順">実際にAWSにデプロイするまでの手順</a></h1>
+<p>実際にAWSにデプロイする際の手順について触れておきます。</p>
 <h2 id="ecr-にリポジトリを作成"><a class="header" href="#ecr-にリポジトリを作成">ECR にリポジトリを作成</a></h2>
-<p>コンテナイメージを使用する場合はリポジトリが必要になります。</p>
+<p>まず、
+コンテナイメージを使用する場合はリポジトリが必要になります。</p>
 <p>DockerHub には対応していません。</p>
-<p>手順に関しては以下に記載があります。</p>
-<p><a href="https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/getting-started-cli.html">Amazon ECR をAWS CLI</a></p>
 <ul>
-<li>リポジトリを作成</li>
+<li>リポジトリを作成
+以下のコマンドでレポジトリを作成します。</li>
 </ul>
 <pre><code class="language-bash">aws ecr create-repository --repository-name workshop-sam-intro
 </code></pre>
@@ -394,14 +396,14 @@ Login Succeeded
 <pre><code class="language-bash">sam deploy --guided
 </code></pre>
 <p>いくつか質問されます。</p>
-<blockquote>
-<p>Stack Name</p>
-</blockquote>
+<ul>
+<li><code>Stack Name</code> </li>
+</ul>
 <p>指定した名前で CloudFormation のスタックが作成されます。</p>
 <p>今回は <code>workshop-sam-intro</code> と名前をつけておきます。</p>
-<blockquote>
-<p>InferenceFunction may not have authorization defined, Is this okay?</p>
-</blockquote>
+<ul>
+<li><code>InferenceFunction may not have authorization defined, Is this okay?</code></li>
+</ul>
 <p>今回は認証を付けていないためこちらの質問には No と回答します。</p>
 <pre><code>
 Configuring SAM deploy

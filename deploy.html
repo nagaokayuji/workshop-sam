@@ -145,13 +145,14 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="実際にawsにデプロイするまでの手順"><a class="header" href="#実際にawsにデプロイするまでの手順">実際にAWSにデプロイするまでの手順</a></h1>
+<p>実際にAWSにデプロイする際の手順について触れておきます。</p>
 <h2 id="ecr-にリポジトリを作成"><a class="header" href="#ecr-にリポジトリを作成">ECR にリポジトリを作成</a></h2>
-<p>コンテナイメージを使用する場合はリポジトリが必要になります。</p>
+<p>まず、
+コンテナイメージを使用する場合はリポジトリが必要になります。</p>
 <p>DockerHub には対応していません。</p>
-<p>手順に関しては以下に記載があります。</p>
-<p><a href="https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/getting-started-cli.html">Amazon ECR をAWS CLI</a></p>
 <ul>
-<li>リポジトリを作成</li>
+<li>リポジトリを作成
+以下のコマンドでレポジトリを作成します。</li>
 </ul>
 <pre><code class="language-bash">aws ecr create-repository --repository-name workshop-sam-intro
 </code></pre>
@@ -171,14 +172,14 @@ Login Succeeded
 <pre><code class="language-bash">sam deploy --guided
 </code></pre>
 <p>いくつか質問されます。</p>
-<blockquote>
-<p>Stack Name</p>
-</blockquote>
+<ul>
+<li><code>Stack Name</code> </li>
+</ul>
 <p>指定した名前で CloudFormation のスタックが作成されます。</p>
 <p>今回は <code>workshop-sam-intro</code> と名前をつけておきます。</p>
-<blockquote>
-<p>InferenceFunction may not have authorization defined, Is this okay?</p>
-</blockquote>
+<ul>
+<li><code>InferenceFunction may not have authorization defined, Is this okay?</code></li>
+</ul>
 <p>今回は認証を付けていないためこちらの質問には No と回答します。</p>
 <pre><code>
 Configuring SAM deploy
