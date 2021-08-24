@@ -9,3 +9,8 @@ CloudFormation についてよく知らなくても問題なく利用できま�
 また、オープンソースのため以下のリポジトリで公開されています。
 
 [GitHub - aws/serverless-application-model: AWS Serverless Application Model (SAM) is an open-source framework for building serverless applications](https://github.com/aws/serverless-application-model)
+
+
+## 何ができるのか？
+
+サーバレスのアプリケーションを簡単に作成できます。
