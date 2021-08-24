@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html" class="active"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">2.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">2.1.</strong> 事前準備</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">3.</strong> まとめ</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html" class="active"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">3.1.</strong> 事前準備</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> まとめ</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -145,9 +145,12 @@
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="lambdaコンテナイメージのサポートについて"><a class="header" href="#lambdaコンテナイメージのサポートについて">Lambdaコンテナイメージのサポートについて</a></h1>
-<p>2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。今回はこちらの機能も使っていきます。</p>
-<p><a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">AWS Lambda の新機能 - コンテナイメージのサポート | Amazon Web Services</a></p>
-<p>以下の言語のイメージが公開されています。</p>
+<p>2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。</p>
+<p>これが非常に便利なので今回はこちらの機能も使っていきます。</p>
+<ul>
+<li><a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">AWS Lambda の新機能 - コンテナイメージのサポート | Amazon Web Services</a></li>
+</ul>
+<p>Lambda では以下の言語のイメージが公開されています。</p>
 <ul>
 <li>Python</li>
 <li>Node.js</li>
@@ -158,15 +161,26 @@
 </ul>
 <p>また、<a href="https://github.com/aws/aws-lambda-base-images">ベースイメージ</a> も公開されており、自由なカスタマイズが可能となっています。</p>
 <h2 id="lambdaでコンテナイメージを使用するメリット"><a class="header" href="#lambdaでコンテナイメージを使用するメリット">Lambdaでコンテナイメージを使用するメリット</a></h2>
+<p>コンテナイメージを使用することで次のようなメリットがあります。</p>
 <ul>
 <li>ローカル環境での確認が容易</li>
 <li>大きなプログラムをデプロイできる（250 MB → <strong>10 GB</strong>）
 <ul>
 <li>従来はパッケージ等を追加するとすぐに上限に達していた</li>
-<li>Cloud9 上で zip ファイルを作成しレイヤーを追加するなどの手間が不要に</li>
+<li>Cloud9 で zip ファイルを作成しレイヤーを追加するなどの手間が不要に</li>
 </ul>
 </li>
 </ul>
+<h2 id="デメリット"><a class="header" href="#デメリット">デメリット</a></h2>
+<ul>
+<li>単純な関数をデプロイしたい場合は逆に面倒
+<ul>
+<li>コンソールや AWS CLI からデプロイしてすぐに実行するほうが速い</li>
+</ul>
+</li>
+<li>ECRにレポジトリを作らないといけない</li>
+</ul>
+<h2 id="使い方"><a class="header" href="#使い方">使い方</a></h2>
 <p>使い方は簡単です。</p>
 <p>以下のようなイメージをビルドし ECR に Push しておき、Lambda 作成時にイメージを指定します。</p>
 <pre><code class="language-docker">FROM public.ecr.aws/lambda/python:3.8
@@ -185,7 +199,7 @@ CMD [ &quot;app.handler&quot; ]
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="hands_on.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="templates.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -199,7 +213,7 @@ CMD [ &quot;app.handler&quot; ]
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="hands_on.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="templates.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>

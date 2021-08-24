@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>シンプルな API を作成してみる(ハンズオン) - AWS SAM ハンズオン</title>
+        <title>ローカル環境でサンプルを実行してみる - AWS SAM ハンズオン</title>
                 
 
         <!-- Custom HTML head -->
@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html" class="active"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">3.1.</strong> 事前準備</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> まとめ</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">3.1.</strong> 事前準備</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html" class="active"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> まとめ</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -144,66 +144,17 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="sam-で-シンプルな-api-を作成してみる-ハンズオン"><a class="header" href="#sam-で-シンプルな-api-を作成してみる-ハンズオン">SAM で シンプルな API を作成してみる (ハンズオン)</a></h1>
-<h2 id="今回扱うものについて"><a class="header" href="#今回扱うものについて">今回扱うものについて</a></h2>
-<p>API Gateway + Lambda のシンプルなAPIを作成します。</p>
-<h2 id="sam-init-samテンプレートを作成"><a class="header" href="#sam-init-samテンプレートを作成">sam init: SAMテンプレートを作成</a></h2>
-<p>早速、適当な作業スペースで次のコマンドを実行してみましょう。</p>
-<pre><code class="language-bash">sam init
-</code></pre>
-<p>次のように聞かれるため、今回は以下のように選択してみます。</p>
-<pre><code class="language-bash">Which template source would you like to use?
-	1 - AWS Quick Start Templates
-	2 - Custom Template LocationWhich template source would you like to use?
-	1 - AWS Quick Start Templates
-	2 - Custom Template Location
-Choice: 1
-What package type would you like to use?
-	1 - Zip (artifact is a zip uploaded to S3)
-	2 - Image (artifact is an image uploaded to an ECR image repository)
-Package type: 2
-
-Which base image would you like to use?
-	1 - amazon/nodejs14.x-base
-	2 - amazon/nodejs12.x-base
-	3 - amazon/nodejs10.x-base
-	4 - amazon/python3.8-base
-	5 - amazon/python3.7-base
-	6 - amazon/python3.6-base
-	7 - amazon/python2.7-base
-	8 - amazon/ruby2.7-base
-	9 - amazon/ruby2.5-base
-	10 - amazon/go1.x-base
-	11 - amazon/java11-base
-	12 - amazon/java8.al2-base
-	13 - amazon/java8-base
-	14 - amazon/dotnet5.0-base
-	15 - amazon/dotnetcore3.1-base
-	16 - amazon/dotnetcore2.1-base
-Base image: 4
-
-Project name [sam-app]: workshop-sam
-
-Cloning app templates from https://github.com/aws/aws-sam-cli-app-templates
-
-AWS quick start application templates:
-	1 - Hello World Lambda Image Example
-	2 - PyTorch Machine Learning Inference API
-	3 - Scikit-learn Machine Learning Inference API
-	4 - Tensorflow Machine Learning Inference API
-	5 - XGBoost Machine Learning Inference API
-Template selection: 3
-</code></pre>
+<h1 id="ローカル環境でサンプルを実行してみる"><a class="header" href="#ローカル環境でサンプルを実行してみる">ローカル環境でサンプルを実行してみる</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="templates.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="build.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="preparation.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="deploy.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -213,11 +164,11 @@ Template selection: 3
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="templates.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="build.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="preparation.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="deploy.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>

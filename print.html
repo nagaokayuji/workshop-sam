@@ -83,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">2.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">2.1.</strong> 事前準備</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">3.</strong> まとめ</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="preparation.html"><strong aria-hidden="true">3.1.</strong> 事前準備</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行してみる</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> まとめ</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -151,11 +151,16 @@
 <p>CloudFormation についてよく知らなくても問題なく利用できます。</p>
 <p>また、オープンソースのため以下のリポジトリで公開されています。</p>
 <p><a href="https://github.com/aws/serverless-application-model">GitHub - aws/serverless-application-model: AWS Serverless Application Model (SAM) is an open-source framework for building serverless applications</a></p>
+<h2 id="何ができるのか"><a class="header" href="#何ができるのか">何ができるのか？</a></h2>
+<p>サーバレスのアプリケーションを簡単に作成できます。</p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="lambdaコンテナイメージのサポートについて"><a class="header" href="#lambdaコンテナイメージのサポートについて">Lambdaコンテナイメージのサポートについて</a></h1>
-<p>2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。今回はこちらの機能も使っていきます。</p>
-<p><a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">AWS Lambda の新機能 - コンテナイメージのサポート | Amazon Web Services</a></p>
-<p>以下の言語のイメージが公開されています。</p>
+<p>2020年末より、AWS Lamba がコンテナイメージのデプロイに対応しました。</p>
+<p>これが非常に便利なので今回はこちらの機能も使っていきます。</p>
+<ul>
+<li><a href="https://aws.amazon.com/jp/blogs/news/new-for-aws-lambda-container-image-support/">AWS Lambda の新機能 - コンテナイメージのサポート | Amazon Web Services</a></li>
+</ul>
+<p>Lambda では以下の言語のイメージが公開されています。</p>
 <ul>
 <li>Python</li>
 <li>Node.js</li>
@@ -166,15 +171,26 @@
 </ul>
 <p>また、<a href="https://github.com/aws/aws-lambda-base-images">ベースイメージ</a> も公開されており、自由なカスタマイズが可能となっています。</p>
 <h2 id="lambdaでコンテナイメージを使用するメリット"><a class="header" href="#lambdaでコンテナイメージを使用するメリット">Lambdaでコンテナイメージを使用するメリット</a></h2>
+<p>コンテナイメージを使用することで次のようなメリットがあります。</p>
 <ul>
 <li>ローカル環境での確認が容易</li>
 <li>大きなプログラムをデプロイできる（250 MB → <strong>10 GB</strong>）
 <ul>
 <li>従来はパッケージ等を追加するとすぐに上限に達していた</li>
-<li>Cloud9 上で zip ファイルを作成しレイヤーを追加するなどの手間が不要に</li>
+<li>Cloud9 で zip ファイルを作成しレイヤーを追加するなどの手間が不要に</li>
 </ul>
 </li>
 </ul>
+<h2 id="デメリット"><a class="header" href="#デメリット">デメリット</a></h2>
+<ul>
+<li>単純な関数をデプロイしたい場合は逆に面倒
+<ul>
+<li>コンソールや AWS CLI からデプロイしてすぐに実行するほうが速い</li>
+</ul>
+</li>
+<li>ECRにレポジトリを作らないといけない</li>
+</ul>
+<h2 id="使い方"><a class="header" href="#使い方">使い方</a></h2>
 <p>使い方は簡単です。</p>
 <p>以下のようなイメージをビルドし ECR に Push しておき、Lambda 作成時にイメージを指定します。</p>
 <pre><code class="language-docker">FROM public.ecr.aws/lambda/python:3.8
@@ -185,9 +201,38 @@ COPY app.py {LAMBDA_TASK_ROOT}
 CMD [ &quot;app.handler&quot; ]
 </code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="テンプレートの構成"><a class="header" href="#テンプレートの構成">テンプレートの構成</a></h1>
+<p>サーバーレスアプリケーションのアーキテクチャを表す YAML 形式のファイルです。</p>
+<p>AWS SAM のテンプレートファイルの構成は次のようになっています。</p>
+<p>ほぼ CloudFormation と同じです。</p>
+<pre><code class="language-yaml">Transform: AWS::Serverless-2016-10-31 
+# SAM を使用する場合は `Transform: AWS::Serverless-2016-10-31` を決まり文句として指定しておきます。
+# これにより CloudFormation テンプレートが SAM のテンプレートとして識別されるようになります。
+Globals: 
+# SAM 固有のセクションです。
+# 共通の関数やAPIのプロパティを定義することができます。
+Description:
+# ここにテンプレートの説明を書きます。
+Metadata:
+# メタデータを定義できます。
+Parameters:
+# テンプレートをデプロイする際に指定できるパラメータを定義できます。
+Mappings:
+# Key-Value 形式でパラメータを指定しておき、条件付きのパラメータとして使用することができます。
+Conditions:
+# 条件分岐を制御することができる条件を定義できます。
+Resources: 
+# 作成するリソースを記載します。
+Outputs:
+# 作成したリソースの属性などをスタックのプロパティから返される値として定義できます。
+</code></pre>
+<p>このうち、SAM を使用する上で必須なものは <code>Transform</code> と <code>Resources</code> のみです。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="sam-で-シンプルな-api-を作成してみる-ハンズオン"><a class="header" href="#sam-で-シンプルな-api-を作成してみる-ハンズオン">SAM で シンプルな API を作成してみる (ハンズオン)</a></h1>
+<h2 id="今回扱うものについて"><a class="header" href="#今回扱うものについて">今回扱うものについて</a></h2>
+<p>API Gateway + Lambda のシンプルなAPIを作成します。</p>
 <h2 id="sam-init-samテンプレートを作成"><a class="header" href="#sam-init-samテンプレートを作成">sam init: SAMテンプレートを作成</a></h2>
-<p>次のコマンドを実行してみましょう。</p>
+<p>早速、適当な作業スペースで次のコマンドを実行してみましょう。</p>
 <pre><code class="language-bash">sam init
 </code></pre>
 <p>次のように聞かれるため、今回は以下のように選択してみます。</p>
@@ -233,7 +278,18 @@ AWS quick start application templates:
 	5 - XGBoost Machine Learning Inference API
 Template selection: 3
 </code></pre>
-<h2 id="テンプレートの確認"><a class="header" href="#テンプレートの確認">テンプレートの確認</a></h2>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="事前準備"><a class="header" href="#事前準備">事前準備</a></h1>
+<p>AWS SAM CLI を使用します。</p>
+<p>インストール方法に関してはいかに記載があります。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html">AWS SAM CLI のインストール</a></p>
+<p>また、今回 Docker も使用します。インストールされていない場合は以下よりインストールしておいてください。</p>
+<p><a href="https://docs.docker.com/get-docker/">Get Docker</a></p>
+<p>以降 SAM CLI を利用して進めていきます。</p>
+<p>適宜こちらのリファレンスを参照して進めていくことをお勧めします。</p>
+<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html">AWS SAMCLI コマンドリファレンス</a></p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="サンプルアプリケーションの確認"><a class="header" href="#サンプルアプリケーションの確認">サンプルアプリケーションの確認</a></h1>
 <p><code>sam init</code> で生成されたプロジェクトは次のような構造になっています。</p>
 <pre><code>.
 ├── README.md
@@ -260,22 +316,6 @@ COPY model /opt/ml/model
 RUN python3.8 -m pip install -r requirements.txt -t .
 
 CMD [&quot;app.lambda_handler&quot;]
-</code></pre>
-<h2 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h2>
-<p>先ほど作成されたディレクトリへ移動し、次のコマンドを実行します。</p>
-<pre><code class="language-bash">sam build
-</code></pre>
-<p>以下のような表示になれば成功です。</p>
-<pre><code>(略)
-Build Succeeded
-
-Built Artifacts  : .aws-sam/build
-Built Template   : .aws-sam/build/template.yaml
-
-Commands you can use next
-=========================
-[*] Invoke Function: sam local invoke
-[*] Deploy: sam deploy --guided
 </code></pre>
 <h1 id="ローカル環境で実行してみる"><a class="header" href="#ローカル環境で実行してみる">ローカル環境で実行してみる</a></h1>
 <h2 id="lambdaを実行"><a class="header" href="#lambdaを実行">Lambdaを実行</a></h2>
@@ -306,6 +346,27 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
 <p>画像のサンプルは GitHub に載せてあります。</p>
 <p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" /></p>
 <p>分類結果が返されることが確認できました。</p>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="sam-build-ビルド"><a class="header" href="#sam-build-ビルド">sam build: ビルド</a></h1>
+<p>早速ビルドしてみます。</p>
+<p>作成されたディレクトリへ移動し、次のコマンドを実行します。</p>
+<pre><code class="language-bash">sam build
+</code></pre>
+<p>以下のような表示になればビルド成功です。</p>
+<pre><code>(略)
+Build Succeeded
+
+Built Artifacts  : .aws-sam/build
+Built Template   : .aws-sam/build/template.yaml
+
+Commands you can use next
+=========================
+[*] Invoke Function: sam local invoke
+[*] Deploy: sam deploy --guided
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
+<h1 id="ローカル環境でサンプルを実行してみる"><a class="header" href="#ローカル環境でサンプルを実行してみる">ローカル環境でサンプルを実行してみる</a></h1>
+<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="実際にawsにデプロイするまでの手順"><a class="header" href="#実際にawsにデプロイするまでの手順">実際にAWSにデプロイするまでの手順</a></h1>
 <h2 id="ecr-にリポジトリを作成"><a class="header" href="#ecr-にリポジトリを作成">ECR にリポジトリを作成</a></h2>
 <p>コンテナイメージを使用する場合はリポジトリが必要になります。</p>
@@ -416,16 +477,6 @@ Successfully created/updated stack - workshop-sam-intro in ap-northeast-1
 <p><code>sam deploy</code> でデプロイした際に設定したスタック名を指定して削除します。</p>
 <pre><code>aws cloudformation delete-stack --stack-name workshop-sam-intro
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="事前準備"><a class="header" href="#事前準備">事前準備</a></h1>
-<p>AWS SAM CLI を使用します。</p>
-<p>インストール方法に関してはいかに記載があります。</p>
-<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html">AWS SAM CLI のインストール</a></p>
-<p>また、今回 Docker も使用します。インストールされていない場合は以下よりインストールしておいてください。</p>
-<p><a href="https://docs.docker.com/get-docker/">Get Docker</a></p>
-<p>以降 SAM CLI を利用して進めていきます。</p>
-<p>適宜こちらのリファレンスを参照して進めていくことをお勧めします。</p>
-<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-command-reference.html">AWS SAMCLI コマンドリファレンス</a></p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="まとめ"><a class="header" href="#まとめ">まとめ</a></h1>
 <p>AWS SAM を利用すると簡単な設定でサーバレスなAPIを立ち上げることができます。</p>
