@@ -8,5 +8,4 @@
     - [ローカル環境でサンプルを実行してみる](./test_sample.md)
     - [APIを追加してみる](./add_api.md)
   - [実際にデプロイするまでの手順](./deploy.md)
-  - [まとめ](./conclusion.md)
   - [参考](./references.md)
