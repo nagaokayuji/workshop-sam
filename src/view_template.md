@@ -115,6 +115,12 @@ Resources:
     - `Type: Api` とすることで API Gateway 経由で呼び出すことになります。[^1]
   - `Properties`
     - API のメソッドとパスを定義します。
+- `Metadata`
+  - コンテナイメージを使用する場合、次のメタデータの指定が必要です。
+  - Dockerfile
+    - Lambda に関連付けられた Dockerfile の名前
+  - DockerContext
+    - Dockerfile の場所
 
 ---
 [^1]: `AWS::Serverless::Api` を作成しなくても、Events で Api を設定しておけば暗黙的に作成してくれます。
