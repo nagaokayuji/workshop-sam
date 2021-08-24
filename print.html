@@ -298,6 +298,10 @@ END RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7
 REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Duration: 2928.78 ms	Billed Duration: 3000 ms	Memory Size: 5000 MB	Max Memory Used: 5000 MB
 {&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;{\&quot;predicted_label\&quot;: 3}&quot;}
 </code></pre>
+<p>レスポンス部分は以下です。</p>
+<pre><code class="language-json">{&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;{\&quot;predicted_label\&quot;: 3}&quot;
+</code></pre>
+<p>分類結果が<code>3</code>ということを意味しています。</p>
 <h2 id="api-を実行"><a class="header" href="#api-を実行">API を実行</a></h2>
 <p><code>sam local start-api</code> コマンドを実行すると、ローカル環境で API サーバが立ち上がります。</p>
 <p>パスについては <code>template.yml</code> の Resources セクション に記載します。</p>
@@ -309,7 +313,10 @@ REPORT RequestId: f7a2ed16-5229-4174-8fdc-fcff84a64ab7	Init Duration: 1.02 ms	Du
 </ul>
 <p>Talend API Tester から画像を送信してみます。</p>
 <p><a href="https://chrome.google.com/webstore/detail/talend-api-tester-free-ed/aejoelaoggembcahagimdiliamlcdmfm">Talend API Tester - Free Edition</a></p>
-<p>画像のサンプルは GitHub に載せてあります。</p>
+<p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824473/202108/3_dvu0gl.png" alt="3" />
+<img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824461/202108/4_xotvfp.png" alt="4" />
+<img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1629824459/202108/5_drkx6e.png" alt="5" /></p>
+<p>※ 画像のサンプルは GitHub に載せてあります。</p>
 <p><img src="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" alt="https://res.cloudinary.com/ddaz9etkx/image/upload/v1628659111/ot/api_ni2woy.png" /></p>
 <p>分類結果が返されることが確認できました。</p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
