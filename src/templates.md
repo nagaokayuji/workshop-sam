@@ -1,4 +1,4 @@
-# テンプレートの構成
+# SAM テンプレートの構成
 
 サーバーレスアプリケーションのアーキテクチャを表す YAML 形式のファイルです。
 
@@ -30,8 +30,3 @@ Outputs:
 ```
 
 このうち、SAM を使用する上で必須なものは `Transform` と `Resources` のみです。
-
-
-詳しくは以下を参照ください。
-
-[AWS SAM template anatomy - AWS Serverless Application Model](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-specification-template-anatomy.html)
