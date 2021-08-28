@@ -8,3 +8,8 @@ services:
       - "./docker/dynamodb:/home/dynamodblocal/data"
     working_dir: /home/dynamodblocal
     command: "-jar DynamoDBLocal.jar -sharedDb -optimizeDbBeforeStartup -dbPath ./data"
+    networks:
+      - workshop-sam
+networks:
+  workshop-sam:
+    external: true
