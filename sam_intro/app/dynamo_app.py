@@ -24,7 +24,7 @@ def handler(event, context):
         return {
             'statusCode': 200,
             'body':
-                json.dumps(table.scan(Limit=10), default=type_handler)
+                json.dumps(table.scan(), default=type_handler)
         }
     else:
         id = int(path_parameters.get('id'))
