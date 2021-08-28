@@ -130,3 +130,5 @@ dmypy.json
 
 # mdBook
 book
+
+.DS_Store
