@@ -536,6 +536,160 @@ APIの実行も問題ないことが確認できます。</p>
 <p>これにて追加のAPIを作成することができました。</p>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="dynamodb-を使用する"><a class="header" href="#dynamodb-を使用する">DynamoDB を使用する</a></h1>
+<p>折角なので DynamoDB を使用してみます。</p>
+<h2 id="事前準備-1"><a class="header" href="#事前準備-1">事前準備</a></h2>
+<p>以下にデータセットと設定が用意されています。</p>
+<pre><code class="language-bash">git clone git@github.com:nagaokayuji/workshop-sam.git
+</code></pre>
+<p><code>dynamodb/docker-compose.yml</code> は以下のように定義されています。</p>
+<pre><code class="language-yaml">version: &quot;3.8&quot;
+services:
+  sam-dynamodb-local:
+    image: amazon/dynamodb-local:1.16.0
+    ports:
+      - &quot;8000:8000&quot;
+    volumes:
+      - &quot;./docker/dynamodb:/home/dynamodblocal/data&quot;
+    working_dir: /home/dynamodblocal
+    command: &quot;-jar DynamoDBLocal.jar -sharedDb -optimizeDbBeforeStartup -dbPath ./data&quot;
+    networks:
+      - workshop-sam
+networks:
+  workshop-sam:
+    external: true
+</code></pre>
+<p><code>workshop-sam</code> という名前の<code>network</code> が必要になるため、事前に作成します。</p>
+<pre><code class="language-bash">docker network create workshop-sam
+</code></pre>
+<p><code>network</code>作成後、
+以下コマンドで起動できます。</p>
+<pre><code class="language-bash">docker-compose -f dynamodb/docker-compose.yml up
+</code></pre>
+<h2 id="作るもの"><a class="header" href="#作るもの">作るもの</a></h2>
+<p>DynamoDB からデータを取得するAPIを追加します。</p>
+<table><thead><tr><th>path</th><th>内容</th></tr></thead><tbody>
+<tr><td>/athletes</td><td>全件取得</td></tr>
+<tr><td>/athletes/{id}</td><td>id を指定してデータ取得</td></tr>
+</tbody></table>
+<h2 id="関数を追加"><a class="header" href="#関数を追加">関数を追加</a></h2>
+<p>今回はファイルを追加する形で作っていきたいと思います。</p>
+<p><code>app/</code>配下に <code>dynamo_app.py</code> という名前でファイルを作成します。</p>
+<h3 id="dynamodb-の使用"><a class="header" href="#dynamodb-の使用">DynamoDB の使用</a></h3>
+<p>Python から DynamoDB を使用するには次のようにします。</p>
+<pre><code class="language-python">import boto3
+import decimal
+from boto3.dynamodb.conditions import Key
+
+# 環境変数からエンドポイントURLを取得
+DYNAMODB_ENDPOINT = os.environ.get(
+    &quot;DYNAMODB_ENDPOINT&quot;, &quot;http://localhost:8000&quot;)
+
+# Resource API を使用
+dynamodb = boto3.resource(
+    'dynamodb', endpoint_url=DYNAMODB_ENDPOINT)
+
+table = dynamodb.Table('athlete')
+</code></pre>
+<p>作成した table オブジェクトから次のようにオペレーションを実行することができます。</p>
+<pre><code class="language-python">table.scan() # scan を実行
+</code></pre>
+<p>今回作成するAPIでは path parameter が存在する場合は <code>Query</code>, 存在しない場合は <code>Scan</code>
+を実行し、結果を返すようにします。</p>
+<h4 id="dynamo_apppy-の全体"><a class="header" href="#dynamo_apppy-の全体"><code>dynamo_app.py</code> の全体</a></h4>
+<p><code>type_handler</code> 関数は DynamoDB との型不整合を吸収するためのものです。</p>
+<pre><code class="language-python">import json
+import boto3
+import os
+import decimal
+from boto3.dynamodb.conditions import Key
+
+DYNAMODB_ENDPOINT = os.environ.get(
+    &quot;DYNAMODB_ENDPOINT&quot;, &quot;http://localhost:8000&quot;)
+dynamodb = boto3.resource(
+    'dynamodb', endpoint_url=DYNAMODB_ENDPOINT)
+table = dynamodb.Table('athlete')
+
+
+def type_handler(x):
+    return float(x) if isinstance(x, decimal.Decimal) else None
+
+
+def handler(event, context):
+    path_parameters = event.get('pathParameters')
+    if path_parameters is None:
+        return {
+            'statusCode': 200,
+            'body':
+                json.dumps(table.scan(), default=type_handler)
+        }
+    else:
+        id = int(path_parameters.get('id'))
+        return {
+            'statusCode': 200,
+            'body':
+                json.dumps(table.query(
+                    KeyConditionExpression=Key('ID').eq(id)
+                ), default=type_handler)
+        }
+</code></pre>
+<h2 id="dockerfile-を変更"><a class="header" href="#dockerfile-を変更">Dockerfile を変更</a></h2>
+<p>上記で作成した<code>dynamo_app.py</code> を docker イメージに追加していきます。</p>
+<p>次の記述を<code>CMD [&quot;app.lambda_handler&quot;]</code> の上の行に追加します。</p>
+<pre><code class="language-docker">COPY dynamo_app.py ./
+</code></pre>
+<h2 id="templateymlを変更"><a class="header" href="#templateymlを変更"><code>template.yml</code>を変更</a></h2>
+<p>API の path と 関数を設定します。</p>
+<p><code>template.yml</code> の <code>Resources</code>セクションに以下を追加します。</p>
+<pre><code class="language-yaml">  DynamoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      PackageType: Image
+      ImageConfig:
+        Command:
+          - &quot;dynamo_app.handler&quot; # ファイル名・関数名
+    #   Policies: AmazonDynamoDBFullAccess
+      Environment:
+        Variables:
+          DYNAMODB_ENDPOINT: &quot;http://sam-dynamodb-local:8000&quot; # 作成したnetworkを指定する
+      Events:
+        ListAthletes: # リスト
+          Type: Api
+          Properties:
+            Path: /athletes
+            Method: get
+        GetAthletes: # id 指定
+          Type: Api
+          Properties:
+            Path: /athletes/{id}
+            Method: get
+    Metadata:
+      Dockerfile: Dockerfile
+      DockerContext: ./app
+      DockerTag: python3.8-v1
+</code></pre>
+<p>以上でOKです。</p>
+<h2 id="ビルド実行"><a class="header" href="#ビルド実行">ビルド・実行</a></h2>
+<p>今までと同様にビルドします。</p>
+<pre><code class="language-bash">sam build
+</code></pre>
+<p>次に実行ですが、Local 環境の DynamoDB と接続するために <code>network</code> を指定する必要があります。</p>
+<p>よって、次のコマンドで実行できます。</p>
+<pre><code class="language-bash">sam local start-api --docker-network workshop-sam
+</code></pre>
+<p>試してみましょう。</p>
+<ul>
+<li>全件取得</li>
+</ul>
+<pre><code class="language-bash">curl http://localhost:3000/athletes
+</code></pre>
+<ul>
+<li>ID指定</li>
+</ul>
+<pre><code class="language-bash">curl http://localhost:3000/athletes/12
+</code></pre>
+<p>次のようなレスポンスが得られれば成功です。</p>
+<pre><code class="language-json">{&quot;Items&quot;: [{&quot;NOC&quot;: &quot;FIN&quot;, &quot;Sex&quot;: &quot;M&quot;, &quot;index&quot;: 31.0, &quot;City&quot;: &quot;Sydney&quot;, &quot;Weight&quot;: 70.0, &quot;Name&quot;: &quot;Jyri Tapani Aalto&quot;, &quot;Sport&quot;: &quot;Badminton&quot;, &quot;Year&quot;: 2000.0, &quot;Games&quot;: &quot;2000 Summer&quot;, &quot;Event&quot;: &quot;Badminton Men's Singles&quot;, &quot;Height&quot;: 172.0, &quot;Team&quot;: &quot;Finland&quot;, &quot;ID&quot;: 12.0, &quot;Medal&quot;: null, &quot;Season&quot;: &quot;Summer&quot;, &quot;Age&quot;: 31.0}], &quot;Count&quot;: 1, &quot;ScannedCount&quot;: 1, &quot;ResponseMetadata&quot;: {&quot;RequestId&quot;: &quot;e0be9c84-eb40-40e0-bea0-cb1ecd1930b7&quot;, &quot;HTTPStatusCode&quot;: 200, &quot;HTTPHeaders&quot;: {&quot;date&quot;: &quot;Sat, 28 Aug 2021 15:19:22 GMT&quot;, &quot;content-type&quot;: &quot;application/x-amz-json-1.0&quot;, &quot;x-amz-crc32&quot;: &quot;3814016791&quot;, &quot;x-amzn-requestid&quot;: &quot;e0be9c84-eb40-40e0-bea0-cb1ecd1930b7&quot;, &quot;content-length&quot;: &quot;405&quot;, &quot;server&quot;: &quot;Jetty(9.4.18.v20190429)&quot;}, &quot;RetryAttempts&quot;: 0}
+</code></pre>
 <div style="break-before: page; page-break-before: always;"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
 <h1 id="実際にawsにデプロイするまでの手順"><a class="header" href="#実際にawsにデプロイするまでの手順">実際にAWSにデプロイするまでの手順</a></h1>
 <p>実際にAWSにデプロイする際の手順について触れておきます。</p>
