@@ -95,7 +95,6 @@ Operation                                 LogicalResourceId                     
 
 しばらく待つと完了します。
 
-※ 実際にはアカウントIDも表示されています。
 
 ```
 （略）
