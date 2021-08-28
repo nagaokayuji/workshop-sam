@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>シンプルな API を作成してみる(ハンズオン) - AWS SAM ハンズオン</title>
+        <title>DynamoDB を使用する - AWS SAM ハンズオン</title>
                 
 
         <!-- Custom HTML head -->
@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> SAM テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html" class="active"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="sam_init.html"><strong aria-hidden="true">3.1.</strong> SAM テンプレートを作成</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行</a></li><li class="chapter-item expanded "><a href="add_api.html"><strong aria-hidden="true">3.5.</strong> APIを追加してみる</a></li><li class="chapter-item expanded "><a href="add_dynamodb.html"><strong aria-hidden="true">3.6.</strong> DynamoDB を使用する</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">5.</strong> 参考</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">AWS SAM ハンズオン</a></li><li class="chapter-item expanded "><a href="lambda_container.html"><strong aria-hidden="true">1.</strong> Lambdaコンテナイメージのサポートについて</a></li><li class="chapter-item expanded "><a href="templates.html"><strong aria-hidden="true">2.</strong> SAM テンプレートの構成</a></li><li class="chapter-item expanded "><a href="hands_on.html"><strong aria-hidden="true">3.</strong> シンプルな API を作成してみる(ハンズオン)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="sam_init.html"><strong aria-hidden="true">3.1.</strong> SAM テンプレートを作成</a></li><li class="chapter-item expanded "><a href="view_template.html"><strong aria-hidden="true">3.2.</strong> サンプルアプリケーションの確認</a></li><li class="chapter-item expanded "><a href="build.html"><strong aria-hidden="true">3.3.</strong> ビルド</a></li><li class="chapter-item expanded "><a href="test_sample.html"><strong aria-hidden="true">3.4.</strong> ローカル環境でサンプルを実行</a></li><li class="chapter-item expanded "><a href="add_api.html"><strong aria-hidden="true">3.5.</strong> APIを追加してみる</a></li><li class="chapter-item expanded "><a href="add_dynamodb.html" class="active"><strong aria-hidden="true">3.6.</strong> DynamoDB を使用する</a></li></ol></li><li class="chapter-item expanded "><a href="deploy.html"><strong aria-hidden="true">4.</strong> 実際にデプロイするまでの手順</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">5.</strong> 参考</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -144,31 +144,17 @@
                 <div id="content" class="content">
                     <main>
                         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css" integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X" crossorigin="anonymous">
-<h1 id="sam-で-シンプルな-api-を作成してみる-ハンズオン"><a class="header" href="#sam-で-シンプルな-api-を作成してみる-ハンズオン">SAM で シンプルな API を作成してみる (ハンズオン)</a></h1>
-<h2 id="今回扱うものについて"><a class="header" href="#今回扱うものについて">今回扱うものについて</a></h2>
-<p>API Gateway + Lambda のシンプルなAPIを作成します。</p>
-<h2 id="事前準備"><a class="header" href="#事前準備">事前準備</a></h2>
-<h3 id="docker"><a class="header" href="#docker">Docker</a></h3>
-<p>インストールされていない場合は以下よりインストールをお願いします。</p>
-<p><a href="https://docs.docker.com/get-docker/">Get Docker</a></p>
-<h3 id="aws-sam-cli"><a class="header" href="#aws-sam-cli">AWS SAM CLI</a></h3>
-<p>SAM を使用するために AWS SAM CLI が必要となります。</p>
-<p>macOS の場合は次のコマンドでインストールできると思います。(Homebrew)</p>
-<pre><code class="language-bash">brew tap aws/tap
-brew install aws-sam-cli
-</code></pre>
-<p>インストール方法に関してはこちらに記載があります。</p>
-<p><a href="https://docs.aws.amazon.com/ja_jp/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html">AWS SAM CLI のインストール</a></p>
+<h1 id="dynamodb-を使用する"><a class="header" href="#dynamodb-を使用する">DynamoDB を使用する</a></h1>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                                                    <a rel="prev" href="templates.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                                    <a rel="prev" href="add_api.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
-                                                    <a rel="next" href="sam_init.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                                    <a rel="next" href="deploy.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -178,11 +164,11 @@ brew install aws-sam-cli
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                                    <a rel="prev" href="templates.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                    <a rel="prev" href="add_api.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
-                                    <a rel="next" href="sam_init.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                    <a rel="next" href="deploy.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                             </nav>
