@@ -175,3 +175,41 @@ API の path と 関数を設定します。
       DockerContext: ./app
       DockerTag: python3.8-v1
 ```
+
+
+以上でOKです。
+
+## ビルド・実行
+
+今までと同様にビルドします。
+
+```bash
+sam build
+```
+
+次に実行ですが、Local 環境の DynamoDB と接続するために `network` を指定する必要があります。
+
+よって、次のコマンドで実行できます。
+
+```bash
+sam local start-api --docker-network workshop-sam
+```
+
+試してみましょう。
+
+- 全件取得
+
+```bash
+curl http://localhost:3000/athletes
+```
+
+
+- ID指定
+```bash
+curl http://localhost:3000/athletes/12
+```
+
+次のようなレスポンスが得られれば成功です。
+```json
+{"Items": [{"NOC": "FIN", "Sex": "M", "index": 31.0, "City": "Sydney", "Weight": 70.0, "Name": "Jyri Tapani Aalto", "Sport": "Badminton", "Year": 2000.0, "Games": "2000 Summer", "Event": "Badminton Men's Singles", "Height": 172.0, "Team": "Finland", "ID": 12.0, "Medal": null, "Season": "Summer", "Age": 31.0}], "Count": 1, "ScannedCount": 1, "ResponseMetadata": {"RequestId": "e0be9c84-eb40-40e0-bea0-cb1ecd1930b7", "HTTPStatusCode": 200, "HTTPHeaders": {"date": "Sat, 28 Aug 2021 15:19:22 GMT", "content-type": "application/x-amz-json-1.0", "x-amz-crc32": "3814016791", "x-amzn-requestid": "e0be9c84-eb40-40e0-bea0-cb1ecd1930b7", "content-length": "405", "server": "Jetty(9.4.18.v20190429)"}, "RetryAttempts": 0}
+```
